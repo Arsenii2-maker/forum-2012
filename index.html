@@ -312,14 +312,14 @@
           <div class="thread-head">
             <h2 class="thread-title">Если конец света правда будет 21 декабря — давайте соберёмся</h2>
             <div class="thread-info">
-              <span>Тема создана: <b>15.12.2012, 18:31</b></span>
+              <span>Тема создана: <b>14.12.2012, 18:31</b></span>
               <span>•</span>
               <span>Автор: <b>oleg_32</b></span>
               <span>•</span>
               <span id="replyCount">Ответов: 0</span>
             </div>
             <div class="phase-note" id="phaseNote">
-              Олег написал вечером и ушёл спать. Ночью тема начнёт оживать.
+              
             </div>
             <div class="pill hidden" id="closedPill">Тема закрыта</div>
           </div>
@@ -328,7 +328,7 @@
 
           <div class="footer">
             Последнее сообщение: <span id="lastMessageTime">15.12.2012, 18:31</span>.
-            <div class="small-note">Форум выглядит так, будто ответы пришли ночью, а утром тема уже была закрыта.</div>
+            <div class="small-note"></div>
           </div>
         </main>
       </div>
@@ -367,7 +367,7 @@
         nick: "paperboy",
         time: "14.12.2012, 19:03",
         role: "Участник",
-        text: "Ну и если всё это ерунда, всё равно лучше не одному сидеть."
+        text: "Бредовая идея."
       },
       {
         nick: "olga_42",
@@ -403,19 +403,19 @@
         nick: "mystic_luna",
         time: "14.12.2012, 22:29",
         role: "Участник",
-        text: "Последние дни правда какие-то странные."
+        text: "Пришла бы, но лень."
       },
       {
         nick: "snowcat",
         time: "14.12.2012, 23:45",
         role: "Участник",
-        text: "Я бы тоже пришла, если не передумаю."
+        text: "Я бы тоже пришел, если не передумаю."
       },
       {
         nick: "polina_star",
         time: "15.12.2012, 00:28",
         role: "Участник",
-        text: "А если это всё бред?"
+        text: "Последние дни правда какие-то странные." 
       },
       {
         nick: "vhs_kid",
@@ -493,14 +493,14 @@
 
     // Reveal night replies after 60 seconds
     setTimeout(() => {
-      setPhase("Ночь. На форум один за другим приходят ответы.");
+      setPhase("");
       nightReplies.forEach((post, i) => {
         setTimeout(() => appendPost(post, true), i * nightStaggerMs);
       });
 
       // Morning reply from Oleg, then close the thread
       setTimeout(() => {
-        setPhase("Утро. Олег открыл тему снова, отправил ответ и закрыл её.");
+        setPhase("");
         appendPost(morningReply, true);
         closedPillEl.classList.remove("hidden");
       }, nightReplies.length * nightStaggerMs + morningDelayAfterNightMs);
