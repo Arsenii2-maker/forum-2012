@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Форум общения • декабрь 2012</title>
+  <style>
+    :root{
+      --bg:#e8edf4;
+      --panel:#ffffff;
+      --line:#c9d4e2;
+      --line2:#dfe6ef;
+      --text:#1f2a37;
+      --muted:#6b7280;
+      --blue:#2f5ea8;
+      --blue2:#537fcb;
+      --soft:#f4f7fc;
+      --shadow:0 8px 24px rgba(15, 23, 42, .08);
+      --green:#2f8a4e;
+      --orange:#c97b2b;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Tahoma, Verdana, Arial, sans-serif;
+      color:var(--text);
+      background:
+        linear-gradient(180deg, #dfe7f2 0%, #eef2f7 35%, #f4f7fb 100%);
+    }
+
+    a{color:var(--blue); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .page{
+      max-width:1320px;
+      margin:0 auto;
+      padding:16px;
+    }
+
+    .shell{
+      border:1px solid var(--line);
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      background:var(--panel);
+    }
+
+    .header{
+      padding:18px 20px;
+      color:#fff;
+      background:linear-gradient(180deg, #547fd0 0%, #345f9f 100%);
+    }
+
+    .title{
+      margin:0;
+      font-size:30px;
+      line-height:1.1;
+      letter-spacing:.2px;
+      font-weight:700;
+    }
+
+    .subtitle{
+      margin-top:6px;
+      font-size:14px;
+      opacity:.94;
+    }
+
+    .nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px;
+      padding:10px 20px;
+      font-size:14px;
+      background:#f6f8fc;
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav span{color:var(--muted)}
+
+    .layout{
+      display:grid;
+      grid-template-columns: 280px 1fr 310px;
+      gap:16px;
+      padding:16px;
+      background:linear-gradient(180deg, #f9fbfe 0%, #f4f7fb 100%);
+    }
+
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:12px;
+      overflow:hidden;
+    }
+
+    .card-head{
+      padding:12px 14px;
+      font-weight:700;
+      font-size:15px;
+      background:linear-gradient(180deg, #f7f9fc 0%, #e9eef7 100%);
+      border-bottom:1px solid var(--line);
+    }
+
+    .card-body{padding:14px}
+
+    .board{
+      padding:10px 0;
+      border-bottom:1px solid #edf1f6;
+    }
+    .board:last-child{border-bottom:none}
+    .board-title{
+      font-weight:700;
+      color:var(--blue);
+      margin-bottom:5px;
+      font-size:14px;
+    }
+    .board p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .topicbox{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .topic{
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:linear-gradient(180deg, #fff 0%, #fafcff 100%);
+      padding:12px;
+      transition:.15s ease;
+    }
+
+    .topic.active{
+      background:#f1f6ff;
+      border-color:#91addd;
+    }
+
+    .topic .meta{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+
+    .topic .name{
+      font-weight:700;
+      line-height:1.35;
+      margin-bottom:4px;
+    }
+
+    .topic .desc{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.4;
+    }
+
+    .thread{
+      display:flex;
+      flex-direction:column;
+    }
+
+    .thread-head{
+      padding:16px 18px;
+      background:linear-gradient(180deg, #ffffff 0%, #f6f9ff 100%);
+      border-bottom:1px solid var(--line);
+    }
+
+    .thread-title{
+      margin:0 0 6px 0;
+      font-size:22px;
+      line-height:1.25;
+      color:#203047;
+    }
+
+    .thread-info{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    .closed{
+      display:inline-block;
+      margin-top:10px;
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:#eef4ff;
+      border:1px solid #ccd9f2;
+      color:#355f9f;
+      opacity:.85;
+    }
+
+    .posts{
+      padding:16px 18px 6px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .post{
+display:grid;
+      grid-template-columns: 54px 1fr;
+      gap:12px;
+      padding:14px;
+      border:1px solid #dbe3ee;
+      border-radius:10px;
+      background:#fff;
+    }
+
+    .avatar{
+      width:54px;
+      height:54px;
+      border-radius:12px;
+      border:1px solid #a9bfe7;
+      background:linear-gradient(180deg, #dde8ff 0%, #c9d8f8 100%);
+      color:#294a86;
+      font-size:18px;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      user-select:none;
+    }
+
+    .post-head{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:8px;
+      margin-bottom:8px;
+      font-size:13px;
+    }
+
+    .nick{
+      font-weight:700;
+      color:#294a86;
+    }
+
+    .date{
+      color:var(--muted);
+    }
+
+    .role{
+      display:inline-block;
+      padding:2px 7px;
+      border-radius:999px;
+      background:#edf4ff;
+      color:#355f9f;
+      border:1px solid #cad8f3;
+      font-size:12px;
+    }
+
+    .post-text{
+      white-space:pre-wrap;
+      line-height:1.55;
+      font-size:14px;
+      word-break:break-word;
+    }
+
+    .post.reply{
+      background:#f8fbff;
+    }
+
+    .composer{
+      margin:0 18px 18px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    .composer-head{
+      background:#f4f7fc;
+      border-bottom:1px solid var(--line);
+      padding:10px 12px;
+      font-weight:700;
+      font-size:14px;
+    }
+
+    .composer-body{
+      padding:12px;
+      display:grid;
+      gap:10px;
+    }
+
+    .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    input, textarea, select, button{
+      font:inherit;
+    }
+
+    input, textarea, select{
+      border:1px solid #cfd8e5;
+      border-radius:8px;
+      padding:10px 12px;
+      background:#fff;
+      color:var(--text);
+      outline:none;
+    }
+
+    textarea{
+      width:100%;
+      min-height:110px;
+      resize:vertical;
+    }
+
+    input:focus, textarea:focus, select:focus{
+      border-color:#8eaddf;
+      box-shadow:0 0 0 3px rgba(78,123,199,.12);
+    }
+
+    .small{
+      flex:1 1 180px;
+      min-width:180px;
+    }
+
+    .btn{
+      border:none;
+      background:linear-gradient(180deg, #507fcf 0%, #355f9f 100%);
+      color:white;
+      border-radius:8px;
+      padding:10px 14px;
+      cursor:pointer;
+      font-weight:bold;
+      box-shadow:0 3px 10px rgba(53,95,159,.25);
+    }
+
+    .btn:hover{filter:brightness(1.03)}
+
+    .btn.secondary{
+      background:linear-gradient(180deg, #f7f9fc 0%, #e8eef8 100%);
+      color:#294a86;
+      border:1px solid #c8d2e1;
+      box-shadow:none;
+    }
+
+    .status{
+      color:var(--muted);
+      font-size:13px;
+      min-height:18px;
+      line-height:1.45;
+    }
+
+    .typing{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .dot{
+      width:6px;
+      height:6px;
+      border-radius:999px;
+      background:#7b8da9;
+      animation:bounce 1s infinite ease-in-out;
+    }
+
+    .dot:nth-child(2){animation-delay:.15s}
+    .dot:nth-child(3){animation-delay:.3s}
+
+    @keyframes bounce{
+      0%,80%,100%{transform:translateY(0); opacity:.45}
+      40%{transform:translateY(-4px); opacity:1}
+    }
+
+    .timer{
+      margin:0 18px 18px;
+      border:1px solid #dbe3ee;
+      border-radius:12px;
+      background:linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+      overflow:hidden;
+    }
+
+    .timer-head{
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, #f7f9fc 0%, #e9eef7 100%);
+      font-weight:700;
+      font-size:15px;
+    }
+
+    .timer-body{
+      padding:14px;
+      display:grid;
+      gap:10px;
+    }
+
+    .progress-wrap{
+      width:100%;
+      height:14px;
+      background:#e8eef8;
+      border-radius:999px;
+      overflow:hidden;
+      border:1px solid #d0d9e8;
+    }
+
+    .progress{
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg, #7da4e8 0%, #4e7bc7 100%);
+      border-radius:999px;
+transition:width .3s linear;
+    }
+
+    .scene-list{
+      display:grid;
+      gap:8px;
+      font-size:13px;
+      color:var(--text);
+    }
+
+    .scene-item{
+      padding:9px 10px;
+      border:1px solid #dbe3ee;
+      border-radius:8px;
+      background:#fff;
+      color:var(--muted);
+    }
+
+    .scene-item.active{
+      color:var(--text);
+      border-color:#9eb5db;
+      background:#f4f8ff;
+    }
+
+    .scene-item.done{
+      color:#355f9f;
+      background:#edf4ff;
+    }
+
+    .big-time{
+      font-size:28px;
+      font-weight:700;
+      color:#203047;
+      letter-spacing:.3px;
+    }
+
+    .prep-note{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .prep-note strong{
+      color:var(--text);
+    }
+
+    .mute{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .hidden{display:none}
+
+    @media (max-width: 1100px){
+      .layout{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="shell">
+      <div class="header">
+        <h1 class="title">Форум общения</h1>
+        <div class="subtitle">Обсуждаем всё, что волнует • декабрь 2012</div>
+      </div>
+
+      <div class="nav">
+        <span>Главная</span>
+        <span>Общение</span>
+        <span>Новости</span>
+        <span>Свободная тема</span>
+        <span>Личные сообщения</span>
+      </div>
+
+      <div class="layout">
+        <aside class="card">
+          <div class="card-head">Разделы форума</div>
+          <div class="card-body">
+            <div class="board">
+              <div class="board-title">Общение</div>
+              <p>Разговоры о жизни, встречах, странных днях и людях.</p>
+            </div>
+            <div class="board">
+              <div class="board-title">Новости</div>
+              <p>Слухи, обсуждения и всё, что сегодня звучит тревожно.</p>
+            </div>
+            <div class="board">
+              <div class="board-title">Свободная тема</div>
+              <p>Можно писать обо всём, что не влезает в правила.</p>
+            </div>
+            <div class="board">
+              <div class="board-title">Встречи</div>
+              <p>Если кто-то не хочет быть один в важный день.</p>
+            </div>
+          </div>
+        </aside>
+
+        <main class="card thread">
+          <div class="thread-head">
+            <h2 class="thread-title">Если конец света правда будет 21 декабря — давайте соберёмся</h2>
+            <div class="thread-info">
+              Тема создана: 15.12.2012 • Автор: <b>oleg_32</b> • Ответов: <span id="replyCount">13</span>
+            </div>
+            <div class="closed">Тема закрыта</div>
+          </div>
+
+          <div class="posts" id="posts"></div>
+
+          <div class="composer">
+            <div class="composer-head">Форум уже не принимает новые ответы</div>
+            <div class="composer-body">
+              <div class="status">
+                Сначала Олег написал тему. Потом пришли 12 ответов. После этого форум замолчал, а Олег занялся подготовкой квартиры.
+              </div>
+            </div>
+          </div>
+
+          <div class="timer">
+            <div class="timer-head">Квартира Олега • подготовка к встрече</div>
+            <div class="timer-body">
+              <div class="big-time" id="bigTime">00:00</div>
+              <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+              <div class="prep-note" id="prepNote">
+                Олег ещё не начал. Сейчас всё тихо.
+              </div>
+              <div class="scene-list" id="sceneList">
+                <div class="scene-item">Олег ставит дополнительные стулья</div>
+                <div class="scene-item">Олег достаёт чашки и считает их</div>
+                <div class="scene-item">Олег открывает холодильник и смотрит, что осталось</div>
+                <div class="scene-item">Олег возвращается к компьютеру и пишет новое сообщение</div>
+              </div>
+              <div class="mute">Примерно через 30 секунд подготовки появится второе сообщение Олега.</div>
+            </div>
+</div>
+
+          <div class="composer" style="margin-top:0;">
+            <div class="composer-head">Новая запись после паузы</div>
+            <div class="composer-body">
+              <div id="secondPostArea" class="status">
+                Пока ничего не опубликовано. Олег думает, ставит стулья и считает чашки.
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <aside class="card">
+          <div class="card-head">Ход сцены</div>
+          <div class="card-body">
+            <div class="topicbox">
+              <div class="topic active" id="step1">
+                <div class="meta"><span>1</span><span>15.12.2012</span></div>
+                <div class="name">Олег пишет первое сообщение</div>
+                <div class="desc">На форуме появляется тема про 21 декабря.</div>
+              </div>
+              <div class="topic" id="step2">
+                <div class="meta"><span>2</span><span>сразу</span></div>
+                <div class="name">Приходит 12 ответов</div>
+                <div class="desc">Люди пишут, что не хотят быть одни.</div>
+              </div>
+              <div class="topic" id="step3">
+                <div class="meta"><span>3</span><span>30 секунд</span></div>
+                <div class="name">Олег готовит квартиру</div>
+                <div class="desc">Стулья, чашки, холодильник, тишина.</div>
+              </div>
+              <div class="topic" id="step4">
+                <div class="meta"><span>4</span><span>потом</span></div>
+                <div class="name">Олег отправляет второе сообщение</div>
+                <div class="desc">Он просит прийти днём 15 декабря.</div>
+              </div>
+            </div>
+
+            <div style="margin-top:14px; padding:12px; border:1px solid #dbe3ee; border-radius:10px; background:#fbfcff;">
+              <div style="font-weight:700; margin-bottom:8px; color:#203047;">Статус форума</div>
+              <div id="forumStatus" class="prep-note">Тема открыта. Ответы уже пришли.</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const postsData = [
+      {
+        nick: "oleg_32",
+        time: "15.12.2012, 18:31",
+        role: "Автор темы",
+        text:
+`Если конец света правда будет 21 декабря —
+давайте просто соберёмся и проведём этот день вместе.
+Если вдруг кто-то хочет провести последнюю неделю не в одиночестве — напишите мне в личные сообщения.`
+      },
+      {
+        nick: "ivan_19",
+        time: "15.12.2012, 18:42",
+        role: "Участник",
+        text: "Не знаю, верю ли, но одному быть не хочется."
+      },
+      {
+        nick: "alisa88",
+        time: "15.12.2012, 18:44",
+        role: "Участник",
+        text: "Мне страшно. Если можно — я приду."
+      },
+      {
+        nick: "polina_star",
+        time: "15.12.2012, 18:47",
+        role: "Участник",
+        text: "А если это всё бред?"
+      },
+      {
+        nick: "katya_tv",
+        time: "15.12.2012, 18:49",
+        role: "Участник",
+        text: "Я согласна. Просто посидеть."
+      },
+      {
+        nick: "olga_42",
+        time: "15.12.2012, 18:51",
+        role: "Участник",
+        text: "Я не верю, но идея интересная."
+      },
+      {
+        nick: "night_window",
+        time: "15.12.2012, 18:53",
+        role: "Участник",
+        text: "Честно, не думал, что кто-то вообще это напишет."
+      },
+      {
+        nick: "serega_91",
+        time: "15.12.2012, 18:55",
+        role: "Участник",
+        text: "Если будет адрес, я, наверное, заеду."
+      },
+      {
+        nick: "mystic_luna",
+        time: "15.12.2012, 18:57",
+        role: "Участник",
+        text: "Последние дни правда какие-то странные."
+      },
+      {
+        nick: "paperboy",
+        time: "15.12.2012, 18:58",
+        role: "Участник",
+        text: "Ну и если всё это ерунда, всё равно лучше не одному сидеть."
+      },
+      {
+        nick: "snowcat",
+        time: "15.12.2012, 19:00",
+        role: "Участник",
+        text: "Я бы тоже пришла, если не передумаю."
+      },
+      {
+        nick: "vhs_kid",
+time: "15.12.2012, 19:03",
+        role: "Участник",
+        text: "Глупо, но в этом есть что-то хорошее."
+      },
+      {
+        nick: "retro_star",
+        time: "15.12.2012, 19:06",
+        role: "Участник",
+        text: "Ладно. Мне просто не хочется встречать это в пустой квартире."
+      }
+    ];
+
+    const secondPost = {
+      nick: "oleg_32",
+      time: "15.12.2012, 19:10",
+      role: "Автор темы",
+      text:
+`Если вы правда хотите прийти — сегодня, 15 декабря.
+Днём. Адрес пришлю в личные сообщения.`
+    };
+
+    const postsEl = document.getElementById("posts");
+    const replyCountEl = document.getElementById("replyCount");
+    const forumStatusEl = document.getElementById("forumStatus");
+    const secondPostAreaEl = document.getElementById("secondPostArea");
+    const bigTimeEl = document.getElementById("bigTime");
+    const progressEl = document.getElementById("progress");
+    const prepNoteEl = document.getElementById("prepNote");
+
+    const step1 = document.getElementById("step1");
+    const step2 = document.getElementById("step2");
+    const step3 = document.getElementById("step3");
+    const step4 = document.getElementById("step4");
+
+    function initials(nick){
+      const cleaned = nick.replace(/[^a-zA-Zа-яА-Я0-9]/g, "");
+      if(!cleaned) return "?";
+      return cleaned[0].toUpperCase();
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function renderPost(post, reply=false){
+      return `
+        <div class="post ${reply ? "reply" : ""}">
+          <div class="avatar">${initials(post.nick)}</div>
+          <div>
+            <div class="post-head">
+              <span class="nick">${escapeHtml(post.nick)}</span>
+              <span class="date">${escapeHtml(post.time)}</span>
+              <span class="role">${escapeHtml(post.role)}</span>
+            </div>
+            <div class="post-text">${escapeHtml(post.text)}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function addReplyCount(n){
+      replyCountEl.textContent = n;
+    }
+
+    function markStep(step){
+      [step1, step2, step3, step4].forEach(el => {
+        el.classList.remove("active");
+        el.classList.remove("done");
+      });
+      if(step === 1){
+        step1.classList.add("active");
+      } else if(step === 2){
+        step1.classList.add("done");
+        step2.classList.add("active");
+      } else if(step === 3){
+        step1.classList.add("done");
+        step2.classList.add("done");
+        step3.classList.add("active");
+      } else if(step === 4){
+        step1.classList.add("done");
+        step2.classList.add("done");
+        step3.classList.add("done");
+        step4.classList.add("active");
+      }
+    }
+
+    function updatePrepText(t){
+      if (t < 5){
+        bigTimeEl.textContent = "00:00";
+        progressEl.style.width = "0%";
+        prepNoteEl.innerHTML = Олег ещё не начал. Сейчас всё тихо.;
+        forumStatusEl.textContent = "Тема открыта. Ответы уже пришли.";
+        markStep(2);
+        return;
+      }
+
+      if (t >= 5 && t < 12){
+        bigTimeEl.textContent = "00:05";
+        progressEl.style.width = "20%";
+        prepNoteEl.innerHTML = <strong>Олег ставит дополнительные стулья.</strong> Ставит, потом убирает, потом снова ставит.;
+        forumStatusEl.textContent = "Олег дома готовит комнату для гостей.";
+        markStep(3);
+        return;
+      }
+
+      if (t >= 12 && t < 18){
+        bigTimeEl.textContent = "00:12";
+        progressEl.style.width = "45%";
+        prepNoteEl.innerHTML = <strong>Олег достаёт чашки и считает их.</strong> Раз, два… много.;
+        forumStatusEl.textContent = "На кухне уже слышно, как стучат чашки.";
+        markStep(3);
+        return;
+      }
+
+      if (t >= 18 && t < 24){
+        bigTimeEl.textContent = "00:18";
+        progressEl.style.width = "70%";
+        prepNoteEl.innerHTML = <strong>Олег открывает холодильник.</strong> Там почти пусто.
+Он закрывает его и стоит секунду молча.;
+        forumStatusEl.textContent = "Олег проверяет, что осталось дома.";
+        markStep(3);
+        return;
+      }
+
+      if (t >= 24 && t < 30){
+        bigTimeEl.textContent = "00:24";
+        progressEl.style.width = "90%";
+        prepNoteEl.innerHTML = <strong>Олег возвращается к компьютеру.</strong> Он уже решил, что ответить всем сразу.;
+        forumStatusEl.textContent = "Сейчас появится второе сообщение.";
+        markStep(3);
+        return;
+      }
+
+      if (t >= 30){
+        bigTimeEl.textContent = "00:30";
+        progressEl.style.width = "100%";
+        prepNoteEl.innerHTML = <strong>Олег отправил новое сообщение всем сразу.</strong> Форум закрыт.;
+        forumStatusEl.textContent = "Второе сообщение отправлено. Форум больше не обновляется.";
+        markStep(4);
+      }
+    }
+
+    function buildForum(){
+      postsEl.innerHTML = "";
+      postsEl.insertAdjacentHTML("beforeend", renderPost(postsData[0], false));
+      for(let i = 1; i < postsData.length; i++){
+        postsEl.insertAdjacentHTML("beforeend", renderPost(postsData[i], true));
+      }
+      addReplyCount(postsData.length);
+    }
+
+    buildForum();
+
+    let secondPostAdded = false;
+    let elapsed = 0;
+
+    function addSecondPost(){
+      if(secondPostAdded) return;
+      secondPostAdded = true;
+      postsEl.insertAdjacentHTML("beforeend", renderPost(secondPost, false));
+      secondPostAreaEl.innerHTML = `
+        <div class="status">
+          <strong>Олег отправил новое сообщение всем сразу:</strong><br>
+          ${escapeHtml(secondPost.text).replace(/\n/g, "<br>")}
+        </div>
+      `;
+      forumStatusEl.textContent = "Тема закрыта. Последнее сообщение уже отправлено.";
+      addReplyCount(13);
+      markStep(4);
+    }
+
+    function tick(){
+      elapsed += 1;
+      updatePrepText(elapsed);
+
+      if(elapsed === 5){
+        // уже началась подготовка
+      }
+
+      if(elapsed === 30){
+        addSecondPost();
+      }
+
+      if(elapsed > 30){
+        clearInterval(timer);
+      }
+    }
+
+    updatePrepText(0);
+    const timer = setInterval(tick, 1000);
+  </script>
+</body>
+</html>
