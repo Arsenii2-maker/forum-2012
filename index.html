@@ -31,7 +31,7 @@
     a:hover{text-decoration:underline}
 
     .page{
-      max-width:1280px;
+      max-width:1180px;
       margin:0 auto;
       padding:16px;
     }
@@ -78,7 +78,7 @@
 
     .layout{
       display:grid;
-      grid-template-columns: 270px 1fr 300px;
+      grid-template-columns: 270px 1fr;
       gap:16px;
       padding:16px;
       background:linear-gradient(180deg, #f9fbfe 0%, #f4f7fb 100%);
@@ -89,7 +89,6 @@
       border:1px solid var(--line);
       border-radius:12px;
       overflow:hidden;
-      min-width:0;
     }
 
     .card-head{
@@ -105,7 +104,6 @@
     .board{
       padding:10px 0;
       border-bottom:1px solid #edf1f6;
-      cursor:pointer;
     }
     .board:last-child{border-bottom:none}
     .board-title{
@@ -120,66 +118,10 @@
       font-size:13px;
       line-height:1.45;
     }
-    .board.active{
-      background:#f2f7ff;
-      border-radius:10px;
-      padding-left:10px;
-      padding-right:10px;
-      margin-left:-10px;
-      margin-right:-10px;
-    }
-
-    .topicbox{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .topic{
-      border:1px solid var(--line);
-      border-radius:10px;
-      background:linear-gradient(180deg, #fff 0%, #fafcff 100%);
-      padding:12px;
-      transition:.15s ease;
-      cursor:pointer;
-    }
-
-    .topic:hover{
-      border-color:#9eb5db;
-      background:#f8fbff;
-      transform:translateY(-1px);
-    }
-
-    .topic.active{
-      background:#f1f6ff;
-      border-color:#91addd;
-    }
-
-    .topic .meta{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      font-size:12px;
-      color:var(--muted);
-      margin-bottom:6px;
-    }
-
-    .topic .name{
-      font-weight:700;
-      line-height:1.35;
-      margin-bottom:4px;
-    }
-
-    .topic .desc{
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.4;
-    }
 
     .thread{
       display:flex;
       flex-direction:column;
-      min-width:0;
     }
 
     .thread-head{
@@ -199,41 +141,33 @@
       font-size:13px;
       color:var(--muted);
       line-height:1.5;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
     }
 
-    .closed{
+    .pill{
       display:inline-block;
-      margin-top:10px;
-      font-size:12px;
       padding:4px 8px;
       border-radius:999px;
       background:#eef4ff;
       border:1px solid #ccd9f2;
       color:#355f9f;
+      font-size:12px;
+      margin-top:10px;
+      width:max-content;
     }
 
-    .thread-actions{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-
-    .btn{
-      border:1px solid #c7d4ea;
-      background:linear-gradient(180deg, #fdfefe 0%, #edf3fb 100%);
-      color:#294a86;
+    .phase-note{
+      margin-top:10px;
+      font-size:12px;
+      color:#4b5563;
+      background:#f8fbff;
+      border:1px dashed #d3ddec;
+      padding:8px 10px;
       border-radius:8px;
-      padding:8px 11px;
-      cursor:pointer;
-      font-weight:700;
-      font-size:13px;
-    }
-
-    .btn.primary{
-      border:none;
-      background:linear-gradient(180deg, #547fd0 0%, #345f9f 100%);
-      color:#fff;
+      line-height:1.4;
     }
 
     .posts{
@@ -251,6 +185,12 @@
       border:1px solid #dbe3ee;
       border-radius:10px;
       background:#fff;
+      animation: fadeUp .25s ease-out;
+    }
+
+    @keyframes fadeUp{
+      from{opacity:0; transform:translateY(6px)}
+      to{opacity:1; transform:translateY(0)}
     }
 
     .avatar{
@@ -304,158 +244,27 @@
     }
 
     .reply{
-      margin-left:66px;
-      padding:12px 14px;
-      border-left:3px solid #c9dafb;
       background:#f8fbff;
-      border-radius:8px;
-      font-size:14px;
-      line-height:1.5;
     }
 
-    .composer{
-      margin:16px 18px 18px;
-      border:1px solid var(--line);
-      border-radius:10px;
-      overflow:hidden;
-      background:#fff;
-    }
-
-    .composer-head{
-      background:#f4f7fc;
-      border-bottom:1px solid var(--line);
-      padding:10px 12px;
-      font-weight:700;
-      font-size:14px;
-    }
-
-    .composer-body{
-      padding:12px;
-      display:grid;
-      gap:10px;
-    }
-
-    .row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    input, textarea, select, button{
-      font:inherit;
-    }
-
-    input, textarea, select{
-      border:1px solid #cfd8e5;
-      border-radius:8px;
-      padding:10px 12px;
-      background:#fff;
-      color:var(--text);
-      outline:none;
-    }
-
-    textarea{
-      width:100%;
-      min-height:110px;
-      resize:vertical;
-    }
-
-    input:focus, textarea:focus, select:focus{
-      border-color:#8eaddf;
-      box-shadow:0 0 0 3px rgba(78,123,199,.12);
-    }
-
-    .small{
-      flex:1 1 180px;
-      min-width:180px;
-    }
-
-    .status{
+    .footer{
+      padding:14px 18px 18px;
+      border-top:1px solid var(--line2);
       color:var(--muted);
-      font-size:13px;
-      min-height:18px;
-    }
-
-    .typing{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .dot{
-      width:6px;
-      height:6px;
-      border-radius:999px;
-      background:#7b8da9;
-      animation:bounce 1s infinite ease-in-out;
-    }
-
-    .dot:nth-child(2){animation-delay:.15s}
-    .dot:nth-child(3){animation-delay:.3s}
-
-    @keyframes bounce{
-      0%,80%,100%{transform:translateY(0); opacity:.45}
-      40%{transform:translateY(-4px); opacity:1}
-    }
-
-    .right-list{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .side-item{
-      border:1px solid var(--line);
-      border-radius:10px;
-      padding:11px 12px;
-      background:linear-gradient(180deg, #fff 0%, #fafcff 100%);
-      cursor:pointer;
-    }
-
-    .side-item:hover{
-      background:#f7fbff;
-      border-color:#9eb5db;
-    }
-
-    .side-item .k{
       font-size:12px;
-      color:var(--muted);
-      margin-bottom:5px;
+      line-height:1.5;
+      background:#fbfcfe;
     }
 
-    .side-item .v{
-      font-weight:700;
-      line-height:1.35;
-      font-size:14px;
+    .small-note{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12px;
     }
 
     .hidden{display:none}
 
-    .empty{
-      padding:18px;
-      color:var(--muted);
-      line-height:1.6;
-      font-size:14px;
-    }
-
-    .mini{
-      font-size:12px;
-      color:var(--muted);
-      margin-top:8px;
-      line-height:1.5;
-    }
-
-    .section-name{
-      padding:12px 14px;
-      background:#f8fbff;
-      border-bottom:1px solid var(--line);
-      font-weight:700;
-      color:#355f9f;
-    }
-
-    @media (max-width: 1150px){
+    @media (max-width: 920px){
       .layout{grid-template-columns:1fr}
     }
   </style>
@@ -479,492 +288,162 @@
       <div class="layout">
         <aside class="card">
           <div class="card-head">Разделы форума</div>
-          <div class="card-body" id="boards"></div>
+          <div class="card-body">
+            <div class="board">
+              <div class="board-title">Общение</div>
+              <p>Разговоры о жизни, встречах, странных днях и людях.</p>
+            </div>
+            <div class="board">
+              <div class="board-title">Новости</div>
+              <p>Слухи, обсуждения и всё, что сегодня звучит тревожно.</p>
+            </div>
+            <div class="board">
+              <div class="board-title">Свободная тема</div>
+              <p>Можно писать обо всём, что не влезает в правила.</p>
+            </div>
+            <div class="board">
+              <div class="board-title">Встречи</div>
+              <p>Если кто-то не хочет быть один в важный день.</p>
+            </div>
+          </div>
         </aside>
 
         <main class="card thread">
           <div class="thread-head">
-            <h2 class="thread-title" id="threadTitle">Выберите тему</h2>
-            <div class="thread-info" id="threadInfo">Слева выберите раздел, потом тему. Можно гулять по форуму, как по старому интернету.</div>
-            <div class="thread-actions">
-              <button class="btn primary" id="backBtn">К темам</button>
-              <button class="btn" id="randomBtn">Случайная тема</button>
+            <h2 class="thread-title">Если конец света правда будет 21 декабря — давайте соберёмся</h2>
+            <div class="thread-info">
+              <span>Тема создана: <b>15.12.2012, 18:31</b></span>
+              <span>•</span>
+              <span>Автор: <b>oleg_32</b></span>
+              <span>•</span>
+              <span id="replyCount">Ответов: 0</span>
             </div>
-            <div class="closed hidden" id="closedBadge">Тема закрыта</div>
+            <div class="phase-note" id="phaseNote">
+              Олег написал вечером и ушёл спать. Ночью тема начнёт оживать.
+            </div>
+            <div class="pill hidden" id="closedPill">Тема закрыта</div>
           </div>
 
-          <div id="threadContent">
-            <div class="empty">
-              Тут откроется выбранный тред. Нажми на любую тему слева или справа, чтобы читать форум как настоящий старый сайт 2012 года.
-              <div class="mini">Олегова тема тоже здесь, но можно полазить и по другим разделам.</div>
-            </div>
-          </div>
+          <div class="posts" id="posts"></div>
 
-          <div class="composer hidden" id="composer">
-            <div class="composer-head">Быстрый ответ</div>
-            <div class="composer-body">
-              <div class="row">
-                <input id="nick" class="small" value="guest_2012" />
-                <select id="mood" class="small">
-                  <option value="normal">Обычный ответ</option>
-                  <option value="typing">Печатает…</option>
-                  <option value="send">Отправить сообщение</option>
-                </select>
-              </div>
-              <textarea id="message" placeholder="Напишите сообщение..."></textarea>
-              <div class="row">
-                <button class="btn primary" id="sendBtn">Отправить</button>
-                <button class="btn" id="clearBtn">Очистить</button>
-              </div>
-              <div class="status" id="status">Готов к ответу.</div>
-              <div class="typing hidden" id="typing">
-                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                <span>печатает...</span>
-              </div>
-            </div>
+          <div class="footer">
+            Последнее сообщение: <span id="lastMessageTime">15.12.2012, 18:31</span>.
+            <div class="small-note">Форум выглядит так, будто ответы пришли ночью, а утром тема уже была закрыта.</div>
           </div>
         </main>
-
-        <aside class="card">
-          <div class="card-head">Темы в разделе</div>
-          <div class="card-body">
-            <div class="right-list" id="threadList"></div>
-          </div>
-        </aside>
       </div>
     </div>
   </div>
 
   <script>
-    const forum = {
-      news: {
-        label: "Новости",
-        description: "Тревожные новости, обсуждения и странные заголовки.",
-        threads: [
-          {
-            id: "news-1",
-            title: "Говорят, 21 декабря будет что-то странное",
-            author: "newsroom",
-            date: "14.12.2012",
-            replies: 8,
-            open: true,
-            posts: [
-              {
-                nick: "newsroom",
-                time: "14.12.2012, 20:11",
-                role: "Автор темы",
-                text:
-`В ленте уже третий день обсуждают 21 декабря.
-Кто-то смеётся, кто-то запугивает, кто-то собирает свечи.
-А вы вообще верите в это или уже устали читать?`
-              },
-              {
-                nick: "sidor_77",
-                time: "14.12.2012, 20:15",
-                role: "Участник",
-                text: "Не верю, но всё равно интересно наблюдать, как все нервничают."
-              },
-              {
-                nick: "mila_09",
-                time: "14.12.2012, 20:19",
-                role: "Участник",
-                text: "Мама сегодня спросила, есть ли дома свечи. Я чуть не подавилась чаем."
-              },
-              {
-                nick: "oldman",
-                time: "14.12.2012, 20:24",
-                role: "Участник",
-                text: "В 2000 тоже говорили, что конец. Пока живём."
-              },
-              {
-                nick: "kate_p",
-                time: "14.12.2012, 20:28",
-                role: "Участник",
-                text: "Мне кажется, люди просто боятся даты, а не самого конца."
-              }
-            ]
-          },
-          {
-            id: "news-2",
-            title: "В магазинах начали пропадать свечи?",
-            author: "press_f",
-            date: "15.12.2012",
-            replies: 6,
-            open: true,
-            posts: [
-              {
-                nick: "press_f",
-                time: "15.12.2012, 09:12",
-                role: "Автор темы",
-                text:
-`Кто-нибудь замечал, что свечи и батарейки стали разбирать быстрее?
-Или это просто мне кажется?`
-              },
-              {
-                nick: "nastya_f",
-                time: "15.12.2012, 09:16",
-                role: "Участник",
-                text: "У нас в доме просто отключали свет, вот все и взяли по свечке."
-              },
-              {
-                nick: "doctor_12",
-                time: "15.12.2012, 09:22",
-                role: "Участник",
-                text: "Паника создаёт спрос. Всё как обычно."
-              },
-              {
-                nick: "valera_m",
-                time: "15.12.2012, 09:27",
-                role: "Участник",
-                text: "Я бы не называл это паникой. Люди просто перестраховываются."
-              }
-            ]
-          }
-        ]
-      },
-      chat: {
-        label: "Общение",
-        description: "Разговоры о жизни, людях и странных вечерах.",
-        threads: [
-          {
-            id: "chat-1",
-            title: "Как вы вообще переживаете такие ожидания?",
-            author: "random_guy",
-            date: "15.12.2012",
-            replies: 7,
-            open: true,
-            posts: [
-              {
-                nick: "random_guy",
-                time: "15.12.2012, 18:03",
-                role: "Автор темы",
-                text:
-`У меня ощущение, что все вокруг слишком серьёзно это обсуждают.
-Кто-то шутит, кто-то боится.
-А вы как?`
-              },
-              {
-                nick: "margo_12",
-                time: "15.12.2012, 18:07",
-                role: "Участник",
-                text: "Я стараюсь вообще не читать новости после обеда."
-              },
-              {
-                nick: "vlad_91",
-                time: "15.12.2012, 18:10",
-                role: "Участник",
-                text: "Сижу дома и делаю вид, что тема меня не касается."
-              },
-              {
-                nick: "lina_s",
-                time: "15.12.2012, 18:13",
-                role: "Участник",
-                text: "А я наоборот стала больше писать людям."
-              },
-              {
-                nick: "den_05",
-                time: "15.12.2012, 18:18",
-                role: "Участник",
-                text: "Честно? Стало как-то тише внутри."
-              }
-            ]
-          },
-          {
-            id: "chat-2",
-            title: "Что вы бы сказали человеку, которого давно не видели?",
-            author: "tanya_box",
-            date: "16.12.2012",
-            replies: 5,
-            open: true,
-            posts: [
-              {
-                nick: "tanya_box",
-                time: "16.12.2012, 13:20",
-                role: "Автор темы",
-                text:
-`Вот если бы у вас был шанс написать сообщение человеку, которого давно не видели...
-что бы вы написали?`
-              },
-              {
-                nick: "roma_f",
-                time: "16.12.2012, 13:24",
-                role: "Участник",
-                text: "Скучаю. Всё."
-              },
-              {
-                nick: "nika_88",
-                time: "16.12.2012, 13:28",
-                role: "Участник",
-                text: "Не знаю, но это сообщение было бы слишком длинным."
-              },
-              {
-                nick: "pavel_t",
-                time: "16.12.2012, 13:31",
-                role: "Участник",
-                text: "Наверное, просто: «Я ещё помню». "
-              }
-            ]
-          },
-          {
-            id: "chat-3",
-            title: "Почему люди так любят ждать плохого?",
-            author: "polina_star",
-            date: "17.12.2012",
-            replies: 4,
-            open: true,
-            posts: [
-              {
-                nick: "polina_star",
-                time: "17.12.2012, 21:44",
-                role: "Автор темы",
-                text:
-`Почему люди так легко верят в плохое?
-Как будто всем проще жить в тревоге, чем в тишине.`
-              },
-              {
-                nick: "iva_19",
-                time: "17.12.2012, 21:49",
-                role: "Участник",
-                text: "Потому что тишина иногда страшнее."
-              },
-              {
-                nick: "lora_m",
-                time: "17.12.2012, 21:51",
-                role: "Участник",
-                text: "Когда ничего не происходит, начинаешь думать обо всём."
-              }
-            ]
-          }
-        ]
-      },
-      free: {
-        label: "Свободная тема",
-        description: "Случайные мысли, странные разговоры и немного хаоса.",
-        threads: [
-          {
-            id: "free-1",
-            title: "Почему в декабре так странно пахнет воздух?",
-            author: "window_guy",
-            date: "16.12.2012",
-            replies: 5,
-            open: true,
-            posts: [
-              {
-                nick: "window_guy",
-                time: "16.12.2012, 22:11",
-                role: "Автор темы",
-                text:
-`У кого-нибудь есть ощущение, что воздух зимой перед чем-то важным будто меняется?
-Не знаю, как объяснить.`
-              },
-              {
-                nick: "mila_09",
-                time: "16.12.2012, 22:14",
-                role: "Участник",
-                text: "Потому что холоднее становится, наверное."
-              },
-              {
-                nick: "astro_fox",
-                time: "16.12.2012, 22:18",
-                role: "Участник",
-                text: "Иногда это просто совпадает с нашими мыслями."
-              },
-              {
-                nick: "maxx_13",
-                time: "16.12.2012, 22:20",
-                role: "Участник",
-                text: "Или нам всем уже пора спать."
-              }
-            ]
-          },
-          {
-            id: "free-2",
-            title: "Кто сегодня вообще спал нормально?",
-            author: "sleepy_cat",
-            date: "17.12.2012",
-            replies: 4,
-            open: true,
-            posts: [
-              {
-                nick: "sleepy_cat",
-                time: "17.12.2012, 11:03",
-                role: "Автор темы",
-                text: "Я проснулась в 5 утра и больше не смогла уснуть. Это нормально?"
-              },
-              {
-                nick: "night_window",
-                time: "17.12.2012, 11:07",
-                role: "Участник",
-                text: "Нет, но нас таких много."
-              },
-              {
-                nick: "oldman",
-                time: "17.12.2012, 11:10",
-                role: "Участник",
-                text: "Плохие новости всегда ломают сон."
-              }
-            ]
-          }
-        ]
-      },
-      meetings: {
-        label: "Встречи",
-        description: "Темы про то, где, когда и с кем увидеться.",
-        threads: [
-          {
-            id: "meet-1",
-            title: "Если кто-то хочет не быть один 21 декабря",
-            author: "oleg_32",
-            date: "15.12.2012",
-            replies: 13,
-            open: true,
-            posts: [
-              {
-                nick: "oleg_32",
-                time: "15.12.2012, 18:31",
-                role: "Автор темы",
-                text:
+    const revealDelayMs = 60000; // 60 секунд до появления ночных ответов
+    const nightStaggerMs = 550;  // задержка между ночными сообщениями
+    const morningDelayAfterNightMs = 2200;
+
+    const postsEl = document.getElementById("posts");
+    const replyCountEl = document.getElementById("replyCount");
+    const phaseNoteEl = document.getElementById("phaseNote");
+    const closedPillEl = document.getElementById("closedPill");
+    const lastMessageTimeEl = document.getElementById("lastMessageTime");
+
+    const firstPost = {
+      nick: "oleg_32",
+      time: "15.12.2012, 18:31",
+      role: "Автор темы",
+      text:
 `Если конец света правда будет 21 декабря —
 давайте просто соберёмся и проведём этот день вместе.
 Если вдруг кто-то хочет провести последнюю неделю не в одиночестве — напишите мне в личные сообщения.`
-              },
-              {
-                nick: "ivan_19",
-                time: "15.12.2012, 18:42",
-                role: "Участник",
-                text: "Не знаю, верю ли, но одному быть не хочется."
-              },
-              {
-                nick: "alisa88",
-                time: "15.12.2012, 18:44",
-                role: "Участник",
-                text: "Мне страшно. Если можно — я приду."
-              },
-              {
-                nick: "polina_star",
-                time: "15.12.2012, 18:47",
-                role: "Участник",
-                text: "А если это всё бред?"
-              },
-              {
-                nick: "katya_tv",
-                time: "15.12.2012, 18:49",
-                role: "Участник",
-                text: "Я согласна. Просто посидеть."
-              },
-              {
-                nick: "olga_42",
-                time: "15.12.2012, 18:51",
-                role: "Участник",
-                text: "Я не верю, но идея интересная."
-              },
-              {
-                nick: "night_window",
-                time: "15.12.2012, 18:53",
-                role: "Участник",
-                text: "Честно, не думал, что кто-то вообще это напишет."
-              },
-              {
-                nick: "serega_91",
-                time: "15.12.2012, 18:55",
-                role: "Участник",
-                text: "Если будет адрес, я, наверное, заеду."
-              },
-              {
-                nick: "mystic_luna",
-                time: "15.12.2012, 18:57",
-                role: "Участник",
-                text: "Последние дни правда какие-то странные."
-              },
-              {
-                nick: "paperboy",
-                time: "15.12.2012, 18:58",
-                role: "Участник",
-                text: "Ну и если всё это ерунда, всё равно лучше не одному сидеть."
-              },
-              {
-                nick: "snowcat",
-                time: "15.12.2012, 19:00",
-                role: "Участник",
-                text: "Я бы тоже пришла, если не передумаю."
-              },
-              {
-                nick: "vhs_kid",
-                time: "15.12.2012, 19:03",
-                role: "Участник",
-                text: "Глупо, но в этом есть что-то хорошее."
-              },
-              {
-                nick: "retro_star",
-                time: "15.12.2012, 19:06",
-                role: "Участник",
-                text: "Ладно. Мне просто не хочется встречать это в пустой квартире."
-              },
-              {
-                nick: "oleg_32",
-                time: "15.12.2012, 19:10",
-                role: "Автор темы",
-                text:
-`Если вы правда хотите прийти — сегодня, 15 декабря.
-Днём. Адрес пришлю в личные сообщения.`
-              }
-            ]
-          },
-          {
-            id: "meet-2",
-            title: "Кто завтра идёт гулять в центр?",
-            author: "lina_s",
-            date: "18.12.2012",
-            replies: 3,
-            open: true,
-            posts: [
-              {
-                nick: "lina_s",
-                time: "18.12.2012, 20:04",
-                role: "Автор темы",
-                text: "Если всё не развалится, я бы пошла в центр погулять."
-              },
-              {
-                nick: "den_05",
-                time: "18.12.2012, 20:07",
-                role: "Участник",
-                text: "Я тоже. Главное, чтобы не слишком поздно."
-              }
-            ]
-          }
-        ]
-      }
     };
 
-    const boardOrder = ["news", "chat", "free", "meetings"];
+    const nightReplies = [
+      {
+        nick: "ivan_19",
+        time: "15.12.2012, 18:42",
+        role: "Участник",
+        text: "Не знаю, верю ли, но одному быть не хочется."
+      },
+      {
+        nick: "alisa88",
+        time: "15.12.2012, 18:44",
+        role: "Участник",
+        text: "Мне страшно. Если можно — я приду."
+      },
+      {
+        nick: "polina_star",
+        time: "15.12.2012, 18:47",
+        role: "Участник",
+        text: "А если это всё бред?"
+      },
+      {
+        nick: "katya_tv",
+        time: "15.12.2012, 18:49",
+        role: "Участник",
+        text: "Я согласна. Просто посидеть."
+      },
+      {
+        nick: "olga_42",
+        time: "15.12.2012, 18:51",
+        role: "Участник",
+        text: "Я не верю, но идея интересная."
+      },
+      {
+        nick: "night_window",
+        time: "15.12.2012, 18:53",
+        role: "Участник",
+        text: "Честно, не думал, что кто-то вообще это напишет."
+      },
+      {
+        nick: "serega_91",
+        time: "15.12.2012, 18:55",
+        role: "Участник",
+        text: "Если будет адрес, я, наверное, заеду."
+      },
+      {
+        nick: "mystic_luna",
+        time: "15.12.2012, 18:57",
+        role: "Участник",
+        text: "Последние дни правда какие-то странные."
+      },
+      {
+        nick: "paperboy",
+        time: "15.12.2012, 18:58",
+        role: "Участник",
+        text: "Ну и если всё это ерунда, всё равно лучше не одному сидеть."
+      },
+      {
+        nick: "snowcat",
+        time: "15.12.2012, 19:00",
+        role: "Участник",
+        text: "Я бы тоже пришла, если не передумаю."
+      },
+      {
+        nick: "vhs_kid",
+        time: "15.12.2012, 19:03",
+        role: "Участник",
+        text: "Глупо, но в этом есть что-то хорошее."
+      },
+      {
+        nick: "retro_star",
+        time: "15.12.2012, 19:06",
+        role: "Участник",
+        text: "Ладно. Мне просто не хочется встречать это в пустой квартире."
+      }
+    ];
 
-    const boardsEl = document.getElementById("boards");
-    const threadListEl = document.getElementById("threadList");
-    const threadContentEl = document.getElementById("threadContent");
-    const threadTitleEl = document.getElementById("threadTitle");
-    const threadInfoEl = document.getElementById("threadInfo");
-    const composerEl = document.getElementById("composer");
-    const closedBadgeEl = document.getElementById("closedBadge");
-    const backBtn = document.getElementById("backBtn");
-    const randomBtn = document.getElementById("randomBtn");
-    const sendBtn = document.getElementById("sendBtn");
-    const clearBtn = document.getElementById("clearBtn");
-    const statusEl = document.getElementById("status");
-    const typingEl = document.getElementById("typing");
-    const messageEl = document.getElementById("message");
-    const nickEl = document.getElementById("nick");
-    const moodEl = document.getElementById("mood");
+    const morningReply = {
+      nick: "oleg_32",
+      time: "16.12.2012, 08:11",
+      role: "Автор темы",
+      text:
+`Если вы правда хотите прийти — сегодня, 15 декабря.
+Днём. Адрес пришлю в личные сообщения.`
+    };
 
-    let currentBoard = "meetings";
-    let currentThread = "meet-1";
-
-    function initials(nick){
-      const cleaned = nick.replace(/[^a-zA-Zа-яА-Я0-9]/g, "");
-      return cleaned ? cleaned[0].toUpperCase() : "?";
-    }
+    let replyCount = 0;
 
     function escapeHtml(str) {
-      return String(str)
+      return str
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
@@ -972,181 +451,61 @@
         .replaceAll("'", "&#039;");
     }
 
-    function renderBoards(activeBoard = currentBoard) {
-      boardsEl.innerHTML = "";
-      boardOrder.forEach(key => {
-        const board = forum[key];
-        const div = document.createElement("div");
-        div.className = "board" + (key === activeBoard ? " active" : "");
-        div.innerHTML = `
-          <div class="board-title">${board.label}</div>
-          <p>${board.description}</p>
-        `;
-        div.addEventListener("click", () => {
-          currentBoard = key;
-          const first = forum[key].threads[0]?.id;
-          renderBoards(key);
-          renderThreadList(key);
-          if (first) openThread(first);
-        });
-        boardsEl.appendChild(div);
-      });
+    function initials(nick){
+      const cleaned = nick.replace(/[^a-zA-Zа-яА-Я0-9]/g, "");
+      return cleaned ? cleaned[0].toUpperCase() : "?";
     }
 
-    function renderThreadList(boardKey) {
-      const board = forum[boardKey];
-      threadListEl.innerHTML = "";
-      board.threads.forEach(thread => {
-        const item = document.createElement("div");
-        item.className = "side-item" + (thread.id === currentThread ? " active" : "");
-        item.innerHTML = `
-          <div class="k">${board.label}</div>
-          <div class="v">${thread.title}</div>
-          <div class="mini">${thread.date} • ${thread.replies} ответов</div>
-        `;
-        item.addEventListener("click", () => openThread(thread.id));
-        threadListEl.appendChild(item);
-      });
-    }
-
-    function findThreadById(id) {
-      for (const key of boardOrder) {
-        const thread = forum[key].threads.find(t => t.id === id);
-        if (thread) return { boardKey: key, thread };
-      }
-      return null;
-    }
-
-    function renderPosts(posts) {
-      return posts.map((post, idx) => {
-        const isReply = idx > 0;
-        return `
-          <div class="post ${isReply ? "reply" : ""}">
-            <div class="avatar">${initials(post.nick)}</div>
-            <div>
-              <div class="post-head">
-                <span class="nick">${escapeHtml(post.nick)}</span>
-                <span class="date">${escapeHtml(post.time)}</span>
-                <span class="role">${escapeHtml(post.role)}</span>
-              </div>
-              <div class="post-text">${escapeHtml(post.text)}</div>
-            </div>
+    function makePost(post, isReply = true) {
+      const wrap = document.createElement("div");
+      wrap.className = "post" + (isReply ? " reply" : "");
+      wrap.innerHTML = `
+        <div class="avatar">${initials(post.nick)}</div>
+        <div>
+          <div class="post-head">
+            <span class="nick">${escapeHtml(post.nick)}</span>
+            <span class="date">${escapeHtml(post.time)}</span>
+            <span class="role">${escapeHtml(post.role)}</span>
           </div>
-        `;
-      }).join("");
-    }
-
-    function openThread(threadId) {
-      const found = findThreadById(threadId);
-      if (!found) return;
-
-      currentBoard = found.boardKey;
-      currentThread = found.thread.id;
-
-      renderBoards(currentBoard);
-      renderThreadList(currentBoard);
-
-      const board = forum[currentBoard];
-      const thread = found.thread;
-
-      threadTitleEl.textContent = thread.title;
-      threadInfoEl.innerHTML = `Тема создана: <b>${escapeHtml(thread.date)}</b> • Автор: <b>${escapeHtml(thread.author)}</b> • Ответов: <b>${thread.replies}</b>`;
-      closedBadgeEl.classList.toggle("hidden", thread.open !== false);
-      composerEl.classList.toggle("hidden", false);
-
-      threadContentEl.innerHTML = `<div class="posts">${renderPosts(thread.posts)}</div>`;
-
-      statusEl.textContent = "Готов к ответу.";
-      typingEl.classList.add("hidden");
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function showWelcome() {
-      threadTitleEl.textContent = "Выберите тему";
-      threadInfoEl.textContent = "Слева выберите раздел, потом тему. Можно гулять по форуму, как по старому интернету.";
-      closedBadgeEl.classList.add("hidden");
-      composerEl.classList.add("hidden");
-      threadContentEl.innerHTML = `
-        <div class="empty">
-          Тут откроется выбранный тред.
-          <div class="mini">Нажимай на темы слева или справа. Олегова тема тоже здесь, и по форуму можно лазить как по старому сайту.</div>
+          <div class="post-text">${escapeHtml(post.text)}</div>
         </div>
       `;
-      threadListEl.innerHTML = "";
+      return wrap;
     }
 
-    function addReply(nick, message) {
-      const thread = findThreadById(currentThread)?.thread;
-      if (!thread) return;
-
-      const newPost = {
-        nick,
-        time: "15.12.2012, 19:12",
-        role: "Новый ответ",
-        text: message
-      };
-
-      thread.posts.push(newPost);
-      thread.replies += 1;
-
-      openThread(thread.id);
-      statusEl.textContent = "Сообщение добавлено в тему.";
+    function appendPost(post, isReply = true) {
+      postsEl.appendChild(makePost(post, isReply));
+      if (isReply) {
+        replyCount += 1;
+        replyCountEl.textContent = `Ответов: ${replyCount}`;
+      }
+      lastMessageTimeEl.textContent = post.time;
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     }
 
-    sendBtn.addEventListener("click", () => {
-      const nick = nickEl.value.trim() || "guest_2012";
-      const msg = messageEl.value.trim();
-      const mood = moodEl.value;
+    function setPhase(text) {
+      phaseNoteEl.textContent = text;
+    }
 
-      if (!msg) {
-        statusEl.textContent = "Сообщение пустое.";
-        return;
-      }
+    // Initial state: only Oleg's first post
+    appendPost(firstPost, false);
+    replyCountEl.textContent = "Ответов: 0";
+    closedPillEl.classList.add("hidden");
 
-      if (mood === "typing") {
-        typingEl.classList.remove("hidden");
-        statusEl.textContent = "Печатает сообщение...";
-        setTimeout(() => {
-          typingEl.classList.add("hidden");
-          addReply(nick, msg);
-          messageEl.value = "";
-        }, 1200);
-        return;
-      }
+    // Reveal night replies after 60 seconds
+    setTimeout(() => {
+      setPhase("Ночь. На форум один за другим приходят ответы.");
+      nightReplies.forEach((post, i) => {
+        setTimeout(() => appendPost(post, true), i * nightStaggerMs);
+      });
 
-      if (mood === "send") {
-        statusEl.textContent = "Отправка...";
-        addReply(nick, msg);
-        messageEl.value = "";
-        return;
-      }
-
-      addReply(nick, msg);
-      messageEl.value = "";
-    });
-
-    clearBtn.addEventListener("click", () => {
-      messageEl.value = "";
-      statusEl.textContent = "Поле очищено.";
-      typingEl.classList.add("hidden");
-    });
-
-    backBtn.addEventListener("click", () => {
-      showWelcome();
-      renderBoards(currentBoard);
-    });
-
-    randomBtn.addEventListener("click", () => {
-      const all = boardOrder.flatMap(key => forum[key].threads.map(t => t.id));
-      const pick = all[Math.floor(Math.random() * all.length)];
-      openThread(pick);
-    });
-
-    renderBoards(currentBoard);
-    renderThreadList(currentBoard);
-    openThread("meet-1");
+      // Morning reply from Oleg, then close the thread
+      setTimeout(() => {
+        setPhase("Утро. Олег открыл тему снова, отправил ответ и закрыл её.");
+        appendPost(morningReply, true);
+        closedPillEl.classList.remove("hidden");
+      }, nightReplies.length * nightStaggerMs + morningDelayAfterNightMs);
+    }, revealDelayMs);
   </script>
 </body>
 </html>
