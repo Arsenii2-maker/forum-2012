@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru"> 
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -119,53 +119,6 @@
       line-height:1.45;
     }
 
-    .topicbox{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .topic{
-      border:1px solid var(--line);
-      border-radius:10px;
-      background:linear-gradient(180deg, #fff 0%, #fafcff 100%);
-      padding:12px;
-      transition:.15s ease;
-      cursor:default;
-    }
-
-    .topic:hover{
-      border-color:#9eb5db;
-      background:#f8fbff;
-      transform:translateY(-1px);
-    }
-
-    .topic.active{
-      background:#f1f6ff;
-      border-color:#91addd;
-    }
-
-    .topic .meta{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      font-size:12px;
-      color:var(--muted);
-      margin-bottom:6px;
-    }
-
-    .topic .name{
-      font-weight:700;
-      line-height:1.35;
-      margin-bottom:4px;
-    }
-
-    .topic .desc{
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.4;
-    }
-
     .thread{
       display:flex;
       flex-direction:column;
@@ -199,6 +152,42 @@
       background:#eef4ff;
       border:1px solid #ccd9f2;
       color:#355f9f;
+      opacity:.45;
+    }
+
+    .closed.active{
+      opacity:1;
+    }
+
+    .actions{
+      padding:14px 18px 0;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn{
+      border:none;
+      background:linear-gradient(180deg, #547fd0 0%, #345f9f 100%);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:700;
+      box-shadow:0 4px 12px rgba(53,95,159,.22);
+    }
+
+    .btn:hover{filter:brightness(1.03)}
+    .btn:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+      box-shadow:none;
+    }
+
+    .hint{
+      font-size:13px;
+      color:var(--muted);
     }
 
     .posts{
@@ -216,6 +205,18 @@
       border:1px solid #dbe3ee;
       border-radius:10px;
       background:#fff;
+      opacity:0;
+      transform: translateY(6px);
+      animation: fadeIn .28s ease forwards;
+    }
+
+    .post.final{
+      background:linear-gradient(180deg, #fff 0%, #f7fbff 100%);
+      border-color:#cddcf5;
+    }
+
+    @keyframes fadeIn{
+      to{opacity:1; transform:translateY(0)}
     }
 
     .avatar{
@@ -266,10 +267,6 @@
       line-height:1.55;
       font-size:14px;
       word-break:break-word;
-    }
-
-    .post.reply{
-      background:#f8fbff;
     }
 
     .footer{
@@ -335,9 +332,14 @@
           <div class="thread-head">
             <h2 class="thread-title">Если конец света правда будет 21 декабря — давайте соберёмся</h2>
             <div class="thread-info">
-              Тема создана: 15.12.2012 • Автор: <b>oleg_32</b> • Ответов: 13
+              Тема создана: 15.12.2012 • Автор: <b>oleg_32</b> • Ответов: <span id="replyCount">0</span>
             </div>
-            <div class="closed">Тема закрыта</div>
+            <div class="closed" id="closedBadge">Тема закрыта</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn" id="openBtn">Показать ответы</button>
+            <div class="hint" id="hint">Сначала виден только первый пост Олега.</div>
           </div>
 
           <div class="posts" id="posts"></div>
@@ -352,16 +354,17 @@
   </div>
 
   <script>
-    const postsData = [
-      {
-        nick: "oleg_32",
-        time: "15.12.2012, 18:31",
-        role: "Автор темы",
-        text:
+    const initialPost = {
+      nick: "oleg_32",
+      time: "15.12.2012, 18:31",
+      role: "Автор темы",
+      text:
 `Если конец света правда будет 21 декабря —
 давайте просто соберёмся и проведём этот день вместе.
 Если вдруг кто-то хочет провести последнюю неделю не в одиночестве — напишите мне в личные сообщения.`
-      },
+    };
+
+    const replies = [
       {
         nick: "ivan_19",
         time: "15.12.2012, 18:42",
@@ -372,13 +375,13 @@
         nick: "alisa88",
         time: "15.12.2012, 18:44",
         role: "Участник",
-        text: "Мне страшно. Если можно — я приду."
+        text: "Я в это не верю, но если будет что-то интересное — я за."
       },
       {
         nick: "polina_star",
         time: "15.12.2012, 18:47",
         role: "Участник",
-        text: "А если это всё бред?"
+        text: "Последние дни правда какие-то странные."
       },
       {
         nick: "katya_tv",
@@ -390,7 +393,7 @@
         nick: "olga_42",
         time: "15.12.2012, 18:51",
         role: "Участник",
-        text: "Я не верю, но идея интересная."
+        text: "Я чувствую, что лучше быть рядом с людьми. Я приду."
       },
       {
         nick: "night_window",
@@ -408,7 +411,7 @@
         nick: "mystic_luna",
         time: "15.12.2012, 18:57",
         role: "Участник",
-        text: "Последние дни правда какие-то странные."
+        text: "А если это всё бред?"
       },
       {
         nick: "paperboy",
@@ -433,24 +436,26 @@
         time: "15.12.2012, 19:06",
         role: "Участник",
         text: "Ладно. Мне просто не хочется встречать это в пустой квартире."
-      },
-      {
-        nick: "oleg_32",
-        time: "15.12.2012, 19:10",
-        role: "Автор темы",
-        text:
-`Если вы правда хотите прийти — сегодня, 15 декабря.
-Днём. Адрес пришлю в личные сообщения.`
       }
     ];
 
-    const postsEl = document.getElementById("posts");
+    const finalReply = {
+      nick: "oleg_32",
+      time: "15.12.2012, 19:10",
+      role: "Автор темы",
+      text:
+`Если вы правда хотите прийти — сегодня, 15 декабря.
+Днём. Адрес пришлю в личные сообщения.`
+    };
 
-    function initials(nick){
-      const cleaned = nick.replace(/[^a-zA-Zа-яА-Я0-9]/g, "");
-      if(!cleaned) return "?";
-      return cleaned[0].toUpperCase();
-    }
+    const postsEl = document.getElementById("posts");
+    const openBtn = document.getElementById("openBtn");
+    const replyCountEl = document.getElementById("replyCount");
+    const hintEl = document.getElementById("hint");
+    const closedBadge = document.getElementById("closedBadge");
+
+    let started = false;
+    let shownReplies = 0;
 
     function escapeHtml(str) {
       return str
@@ -461,26 +466,75 @@
         .replaceAll("'", "&#039;");
     }
 
-    function renderPosts() {
-      postsEl.innerHTML = postsData.map(post => {
-        const isReply = post.nick !== "oleg_32" || post.time !== "15.12.2012, 18:31";
-        return `
-          <div class="post ${isReply ? "reply" : ""}">
-            <div class="avatar">${initials(post.nick)}</div>
-            <div>
-              <div class="post-head">
-                <span class="nick">${escapeHtml(post.nick)}</span>
-                <span class="date">${escapeHtml(post.time)}</span>
-                <span class="role">${escapeHtml(post.role)}</span>
-              </div>
-              <div class="post-text">${escapeHtml(post.text)}</div>
-            </div>
-          </div>
-        `;
-      }).join("");
+    function initials(nick){
+      const cleaned = nick.replace(/[^a-zA-Zа-яА-Я0-9]/g, "");
+      if(!cleaned) return "?";
+      return cleaned[0].toUpperCase();
     }
 
-    renderPosts();
+    function renderPost(post, isFinal=false){
+      const div = document.createElement("div");
+      div.className = "post" + (isFinal ? " final" : "");
+
+      div.innerHTML = `
+        <div class="avatar">${initials(post.nick)}</div>
+        <div>
+          <div class="post-head">
+            <span class="nick">${escapeHtml(post.nick)}</span>
+            <span class="date">${escapeHtml(post.time)}</span>
+            <span class="role">${escapeHtml(post.role)}</span>
+          </div>
+          <div class="post-text">${escapeHtml(post.text)}</div>
+        </div>
+      `;
+      return div;
+    }
+
+    function updateCounter(){
+      replyCountEl.textContent = shownReplies;
+    }
+
+    function revealReplies(){
+      if (started) return;
+      started = true;
+
+      openBtn.disabled = true;
+      openBtn.textContent = "Открываем тему...";
+      hintEl.textContent = "Сначала идут ответы людей, потом финальный ответ Олега.";
+
+      let index = 0;
+      const delay = 850;
+
+      const timer = setInterval(() => {
+        if (index < replies.length) {
+          postsEl.appendChild(renderPost(replies[index]));
+          shownReplies += 1;
+          updateCounter();
+          index += 1;
+          window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+          return;
+        }
+
+        clearInterval(timer);
+
+        setTimeout(() => {
+          postsEl.appendChild(renderPost(finalReply, true));
+          shownReplies += 1;
+          updateCounter();
+
+          closedBadge.classList.add("active");
+          hintEl.textContent = "Тема закрыта.";
+          openBtn.textContent = "Ответы показаны";
+          window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        }, 650);
+      }, delay);
+    }
+
+    // Сначала виден только первый пост Олега
+    postsEl.appendChild(renderPost(initialPost));
+    updateCounter();
+
+    openBtn.addEventListener("click", revealReplies);
   </script>
 </body>
 </html>
