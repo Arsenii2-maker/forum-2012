@@ -340,7 +340,6 @@
 
     const postsEl = document.getElementById("posts");
     const replyCountEl = document.getElementById("replyCount");
-    const phaseNoteEl = document.getElementById("phaseNote");
     const closedPillEl = document.getElementById("closedPill");
     const lastMessageTimeEl = document.getElementById("lastMessageTime");
 
@@ -478,9 +477,7 @@
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     }
 
-    function setPhase(text) {
-      phaseNoteEl.textContent = text;
-    }
+    
 
     // Initial state: only Oleg's first post
     appendPost(firstPost, false);
@@ -489,14 +486,12 @@
 
     // Reveal night replies after 60 seconds
     setTimeout(() => {
-      setPhase("");
       nightReplies.forEach((post, i) => {
         setTimeout(() => appendPost(post, true), i * nightStaggerMs);
       });
 
       // Morning reply from Oleg, then close the thread
       setTimeout(() => {
-        setPhase("");
         appendPost(morningReply, true);
         closedPillEl.classList.remove("hidden");
       }, nightReplies.length * nightStaggerMs + morningDelayAfterNightMs);
