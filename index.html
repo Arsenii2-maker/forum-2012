@@ -334,9 +334,10 @@
   </div>
 
   <script>
-    const revealDelayMs = 60000; // 60 секунд до появления ночных ответов
-    const nightStaggerMs = 550;  // задержка между ночными сообщениями
-    const morningDelayAfterNightMs = 2200;
+    // Задержки
+    const NIGHT_DELAY_MS = 60000;        // 1 минута до начала ночных ответов
+    const NIGHT_STAGGER_MS = 550;        // задержка между ночными сообщениями
+    const MORNING_DELAY_AFTER_NIGHT_MS = 60000; // ЕЩЁ 1 минута после последнего ночного
 
     const postsEl = document.getElementById("posts");
     const replyCountEl = document.getElementById("replyCount");
@@ -378,7 +379,7 @@
         text: "Честно, не думал, что кто-то вообще это напишет."
       },
       {
-        nick: "alisa88",
+        nick: "alisa18",
         time: "14.12.2012, 20:43",
         role: "Участник",
         text: "Я не верю, но идея интересная."
@@ -477,25 +478,25 @@
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     }
 
-    
-
-    // Initial state: only Oleg's first post
+    // 1. Сразу показываем первое сообщение
     appendPost(firstPost, false);
     replyCountEl.textContent = "Ответов: 0";
     closedPillEl.classList.add("hidden");
 
-    // Reveal night replies after 60 seconds
+    // 2. Через 60 секунд начинаем показывать ночные ответы
     setTimeout(() => {
       nightReplies.forEach((post, i) => {
-        setTimeout(() => appendPost(post, true), i * nightStaggerMs);
+        setTimeout(() => appendPost(post, true), i * NIGHT_STAGGER_MS);
       });
 
-      // Morning reply from Oleg, then close the thread
+      // 3. Ещё через 60 секунд после ПОСЛЕДНЕГО ночного — утренний ответ и закрытие темы
+      const totalNightDuration = nightReplies.length * NIGHT_STAGGER_MS;
       setTimeout(() => {
         appendPost(morningReply, true);
         closedPillEl.classList.remove("hidden");
-      }, nightReplies.length * nightStaggerMs + morningDelayAfterNightMs);
-    }, revealDelayMs);
+      }, totalNightDuration + MORNING_DELAY_AFTER_NIGHT_MS);
+      
+    }, NIGHT_DELAY_MS);
   </script>
 </body>
 </html>
